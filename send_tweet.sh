@@ -1,19 +1,25 @@
 #!/bin/bash
 
-USER_TWEET=$(yad --center --title="Fazer Tweet" 			\
-	--width=500\
-	--form\
+USER_TWEET=$(yad --center\
+    --on-top\
+    --title="Fazer Tweet"\
+    --width=500\
+    --form\
     --borders=10\
     --image ./src/twitter.png\
-    --field="Faça um tweet:":TXT\
+    --field="<span><b>Selecionar imagens: </b></span>":FL --file-filter "Imagens | *.jpg *.png"\
+    --field="<span><b>Faça um tweet:</b></span>":TXT\
     --button="Cancelar":1\
     --button="Tweetar":0\
 );
 
-echo $USER_TWEET
-
-if [ "$(echo $USER_TWEET | cut -d'|' -f1)" != '' ]
+if [[ "$(echo $USER_TWEET | cut -d'|' -f1)" != '' ||  "$(echo $USER_TWEET | cut -d'|' -f2)" != '' ]]
 then
-	tt=$(echo $USER_TWEET | cut -d'|' -f1)
-    python3 tweet.py "$tt"
+    
+    img=$( [ "$(echo $USER_TWEET | cut -d'|' -f1)" != '' ] && echo "$(echo $USER_TWEET | cut -d'|' -f1)" || echo "null" ) 
+
+    tt=$( [ "$(echo $USER_TWEET | cut -d'|' -f2)" != '' ] && echo "$(echo $USER_TWEET | cut -d'|' -f2)" || echo "null" )
+
+    python3 tweet.py "$img" "$tt"
+
 fi
