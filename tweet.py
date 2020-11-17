@@ -7,5 +7,5 @@ auth.set_access_token("TOKEN", "TOKEN_SECRET")
 api = tweepy.API(auth)
 
 tweet = str(sys.argv[1])
-api.update_status(status =(tweet))
+api.update_status(status =(tweet)).replace('\\n', '\n')
 print ("\nTá tuítado 😎️👍️")
