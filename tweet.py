@@ -8,17 +8,16 @@ api = tweepy.API(auth)
 
 print("\nsys.argv:\n", sys.argv, "\n")
 
-#img = str(sys.argv[1])
-imagem = api.media_upload(str(sys.argv[1]))
+img = str(sys.argv[1])
 tweet = str(sys.argv[2]).replace('\\n', '\n')
 
 if img == "null":
     api.update_status(status =(tweet))
 
 elif tweet == "null":
-    api.update_status(media_ids=[imagem.media_id])
+    api.update_status(media_ids=[api.media_upload(img).media_id])
 
 else:
-    api.update_status(status =(tweet), media_ids=[imagem.media_id])
+    api.update_status(status =(tweet), media_ids=[api.media_upload(img).media_id])
 
 print ("\nTá tuítado 😎️👍️")
